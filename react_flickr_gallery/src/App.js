@@ -3,30 +3,27 @@
 import React, { Component } from 'react';
 import './index.css';
 import Search from './Components/Search'
+import NavBar from './Components/NavBar'
 
 
 class App extends Component {
+
+
+    componentDidMount() {
+
+    }
 
     render() {
       return (
 
         <div className="holder">
-
+            
             <Search />
+            <NavBar />
 
-            <nav className="main-nav">
-                <ul>
-                    <li><a href='#'>Cats</a></li>
-                    <li><a href='#'>Dogs</a></li>
-                    <li><a href='#'>Computers</a></li>
-                </ul>
-            </nav>
-
-            {/*<div className="photo-container">*/}
-                {/*<h2>Results</h2>*/}
-
-
-            {/*</div>*/}
+            <div className="photo-container">
+                <h2>Results</h2>
+            </div>
         </div>
     );
   }
