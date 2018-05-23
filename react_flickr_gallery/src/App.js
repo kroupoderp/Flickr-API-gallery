@@ -14,7 +14,9 @@ class App extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {}
+        this.state = {
+            images: [],
+        }
     }
 
     componentDidMount() {
@@ -26,7 +28,7 @@ class App extends Component {
         return `https://farm${obj.farm}.staticflickr.com/${obj.server}/${obj.id}_${obj.secret}_z.jpg`
     }
 
-    performQuery = (query = 'Desert') => {
+    performQuery = (query) => {
         let api_key = apiKey;
         console.log(query);
         fetch(`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=24a336b0e37be1baac665a93b098f960&text=${query}&per_page=20&format=json&nojsoncallback=1`)
@@ -39,26 +41,24 @@ class App extends Component {
 
 
     render() {
-      return (
-        <BrowserRouter>
-            <div className="holder">
 
-                <Search />
-                <NavBar search={this.performQuery} />
+        return (
+              <BrowserRouter>
+                  <div className="holder">
 
-                <Route exact path="/"
-                       render={() => <Redirect to={"/desert"}/>}/>
-                <Route path="/" render={(props) =>
-                    <ImageList photos={this.state.images}/>}/>
+                      <Search/>
+                      <NavBar search={this.performQuery}/>
 
-            </div>
-        </BrowserRouter>
-    );
+                      <Route exact path="/"
+                             render={() => <Redirect to={"/cats"}/>}/>
+
+                      <Route path="/" render={(props) =>
+                          <ImageList photos={this.state.images}/>}/>
+
+                  </div>
+              </BrowserRouter>
+          );
   }
 }
-// data returned in performQuery will needs to be passed to ImageList.
 
 export default App;
-
-
-// props) => <ImageList data={this.state.data}/>

@@ -6,7 +6,7 @@ const Image = (props) => {
 
    return (
        <li>
-            <img src={this.props.photo_url} alt=""/>
+            <img src={props.photo_url} alt=""/>
        </li>
    )
 

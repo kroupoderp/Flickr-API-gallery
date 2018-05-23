@@ -16,9 +16,9 @@ class NavBar extends React.Component {
         return (
             <nav className="main-nav" onClick={this.link_search}>
                 <ul>
-                    <li><NavLink to="/desert">Desert</NavLink></li>
-                    <li><NavLink to="/mountains">Mountains</NavLink></li>
-                    <li><NavLink to="/ocean">Ocean</NavLink></li>
+                    <li><NavLink to="/cats">Cats</NavLink></li>
+                    <li><NavLink to="/dogs">Dogs</NavLink></li>
+                    <li><NavLink to="/cars">Cars</NavLink></li>
                 </ul>
             </nav>
         )
