@@ -3,9 +3,6 @@ body {
     font-family: 'Open Sans', sans-serif;
     color: #3f4850;
 }
-
-
-
 h2 {
     font-size: 2em;
     margin: 52px 0 40px;
@@ -41,6 +38,13 @@ input {
     border-radius: 0.35em 0 0 0.35em;
     outline: none;
 }
+
+.loading {
+    margin-top: 180px;
+    color: darkgrey;
+    oopacity: .3;
+}
+
 .main-nav li {
     width: 100%;
     margin-bottom: 1em;

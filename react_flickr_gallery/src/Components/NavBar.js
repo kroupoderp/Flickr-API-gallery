@@ -4,12 +4,14 @@ import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types'
 
-class NavBar extends React.Component {
+class NavBar extends Component {
 
 
     link_search = e => {
-        let query = e.target.textContent;
-        this.props.search(query)
+        if(e.target.tagName === 'A') {
+            let query = e.target.textContent;
+            this.props.search(query)
+        }
     };
 
 
@@ -18,8 +20,8 @@ class NavBar extends React.Component {
         return (
             <nav className="main-nav" onClick={this.link_search}>
                 <ul>
-                    <li><NavLink to="/cats">Cats</NavLink></li>
-                    <li><NavLink to="/dogs">Dogs</NavLink></li>
+                    <li><NavLink to="/cars">Cars</NavLink></li>
+                    <li><NavLink to="/ships">Ships</NavLink></li>
                     <li><NavLink to="/airplanes">Airplanes</NavLink></li>
                 </ul>
             </nav>

@@ -13,6 +13,7 @@ class App extends Component {
         super(props);
         this.state = {
             images: [],
+            loading: true,
         }
     }
 
@@ -26,17 +27,19 @@ class App extends Component {
 
     performQuery = (query) => {
 
-        let text = query ? query : window.location.href;
-        if (!query) {
-                let index = text.lastIndexOf('/');
-                text = text.slice(index + 1);
-        }
+        this.setState({loading: true});
 
-        fetch(`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&text=${text}&per_page=20&format=json&nojsoncallback=1`)
+        // let text = query ? query : window.location.href;
+        // if (!query) {
+        //         let index = text.lastIndexOf('/');
+        //         text = text.slice(index + 1);
+        // }
+
+        fetch(`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&text=${query}&per_page=20&format=json&nojsoncallback=1`)
             .then((data) => data.json())
             .then((data) => data.photos.photo)
             .then((data) => data.map(this.generatePhotoLinks))
-            .then((data) => this.setState({images: data}))
+            .then((data) => this.setState({images: data, title: query, loading: false}))
             .catch((error) => console.log("There's an error: ", error))
     };
 
@@ -50,10 +53,14 @@ class App extends Component {
                       <NavBar search={this.performQuery}/>
 
                       <Route exact path="/"
-                             render={() => <Redirect to={"/cats"}/>}/>
+                             render={() => <Redirect to={"/cars"}/>}/>
+
+                      {  this.state.loading ? <h1 className="loading">Loading...</h1> :
 
                       <Route path="/" render={(props) =>
-                          <ImageList photos={this.state.images}/>}/>
+                          <ImageList photos={this.state.images} title={this.state.title}/>}/>
+
+                      }
 
                   </div>
               </BrowserRouter>
