@@ -12,8 +12,8 @@ const ImageList = (props) => {
         <div className="photo-container">
             <h2>Photos</h2>
             <ul>
-                {results.map((url) =>
-                    <Image photo_url={url}/>
+                {results.map((url, i) =>
+                    <Image photo_url={url} key={"photo_" + i}/>
                 )}
             </ul>
         </div>

@@ -1,5 +1,3 @@
-
-
 import React, { Component } from 'react';
 import './index.css';
 import Search from './Components/Search';
@@ -10,7 +8,6 @@ import apiKey from './config';
 
 
 class App extends Component {
-
 
     constructor(props) {
         super(props);
@@ -23,22 +20,25 @@ class App extends Component {
         this.performQuery();
     }
 
-
     generatePhotoLinks(obj) {
         return `https://farm${obj.farm}.staticflickr.com/${obj.server}/${obj.id}_${obj.secret}_z.jpg`
     }
 
     performQuery = (query) => {
-        let api_key = apiKey;
-        console.log(query);
-        fetch(`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=24a336b0e37be1baac665a93b098f960&text=${query}&per_page=20&format=json&nojsoncallback=1`)
+
+        let text = query ? query : window.location.href;
+        if (!query) {
+                let index = text.lastIndexOf('/');
+                text = text.slice(index + 1);
+        }
+
+        fetch(`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&text=${text}&per_page=20&format=json&nojsoncallback=1`)
             .then((data) => data.json())
             .then((data) => data.photos.photo)
             .then((data) => data.map(this.generatePhotoLinks))
             .then((data) => this.setState({images: data}))
             .catch((error) => console.log("There's an error: ", error))
     };
-
 
     render() {
 
