@@ -6,21 +6,21 @@ import PropTypes from 'prop-types'
 
 class NavBar extends Component {
 
-
-    link_search = e => {
-        if(e.target.tagName === 'A') {
-            let query = e.target.textContent;
-            this.props.search(query)
-        }
-    };
+    //
+    // link_search = e => {
+    //     if(e.target.tagName === 'A') {
+    //         let query = e.target.textContent;
+    //         this.props.search(query)
+    //     }
+    // };
 
     render() {
         return (
-            <nav className="main-nav" onClick={this.link_search}>
+            <nav className="main-nav">
                 <ul>
-                    <li><NavLink to="/cars">Cars</NavLink></li>
-                    <li><NavLink to="/ships">Ships</NavLink></li>
-                    <li><NavLink to="/airplanes">Airplanes</NavLink></li>
+                    <li><NavLink exact to="/cars">Cars</NavLink></li>
+                    <li><NavLink exact to="/ships">Ships</NavLink></li>
+                    <li><NavLink exact to="/airplanes">Airplanes</NavLink></li>
                 </ul>
             </nav>
         )
