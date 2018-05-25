@@ -14,8 +14,6 @@ class NavBar extends Component {
         }
     };
 
-
-
     render() {
         return (
             <nav className="main-nav" onClick={this.link_search}>
