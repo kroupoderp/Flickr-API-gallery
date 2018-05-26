@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 import Search from './Components/Search';
 import NavBar from './Components/NavBar';
-import ImageList from './Components/ImageList';
+import Gallery from './Components/Gallery';
 import apiKey from './config';
 import Spinner from './Spinner'
 

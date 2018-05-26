@@ -8,6 +8,7 @@ class Search extends Component {
             input_value: '',
         };
         this.update_input = this.update_input.bind(this);
+        this.submit_input = this.submit_input.bind(this);
     }
 
     update_input(e) {
@@ -16,11 +17,21 @@ class Search extends Component {
         })
     }
 
+    submit_input(e) {
+        e.preventDefault();
+        let search_text = this.state.input_value;
+        this.props.performSearch(search_text);
+        this.input.value='';
+
+    }
+
+
+
     render() {
         return (
-            <form className="search-form">
+            <form className="search-form" onSubmit={this.submit_input}>
                 <input type="search" name="search" placeholder="Search"
-                       value={this.state.input_value}
+                       value={this.state.input_value} ref={(input) => this.input = input}
                        onChange={this.update_input} required/>
                 <button type="submit" className="search-button">
                     <svg fill="#fff" height="24" viewBox="0 0 23 23" width="24" xmlns="http://www.w3.org/2000/svg">

@@ -2,48 +2,63 @@ import React, { Component } from 'react';
 import './index.css';
 import Search from './Components/Search';
 import NavBar from './Components/NavBar';
-import ImageList from './Components/ImageList';
 import {BrowserRouter, Route, Redirect, Switch} from 'react-router-dom';
 import NotFound from './Components/NotFound'
-
+import Cars from './Components/Categories/Cars';
+import Ships from './Components/Categories/Ships';
+import Airplanes from './Components/Categories/Airplanes';
+import SearchResults from './Components/Categories/SearchResults'
 
 
 class App extends Component {
 
+    search(text) {
+        console.log(text);
+        window.location.pathname = '/Search/' + text;
+    }
+
 
     render() {
 
-            return (
-                <BrowserRouter>
-                    <div className="holder">
+        let query = window.location.pathname.slice(8);
+        let tagName = decodeURI(query);
 
-                        <Search/>
+        return (
+            <BrowserRouter>
+                <div className="holder">
 
-                        <NavBar/>
+                    <Search performSearch={this.search}/>
+
+                    <NavBar/>
+
+                    <Route exact path="/"
+                           render={() => <Redirect to={"/cars"}/>}/>
+
+                    <Switch>
+                        <Route exact path="/cars"
+                               render={(props) => <Cars title="Cars" tag="cars"/>}/>
+
+                        <Route exact path="/ships"
+                               render={(props) => <Ships title="Ships" tag="ships"/>}/>
+
+                        <Route exact path="/airplanes"
+                               render={(props) => <Airplanes title="Airplanes" tag="airplanes"/>}/>
+
+                        <Route path="/Search"
+                               render={(props) => <SearchResults
+                                   title={tagName}
+                                   tag={query}/>}/>
 
 
-            {/*NotFound is being rendered all the time. To prevent that, I would*/}
-            {/*place all Routes inside of a Switch component. But if I do that */}
-            {/*there'll be a new problem: when clicking a navigation button from NavBar, */}
-            {/*ImageList will not get rendered again, and new title and photos will*/}
-            {/*not appear, why is that?!?!?*/}
-
-                        <Route exact path="/"
-                               render={() => <Redirect to={"/cars"}/>}/>
-
-                        <Route path="/cars" component={ImageList}/>
-                        <Route path="/ships" component={ImageList}/>
-                        <Route path="/airplanes" component={ImageList}/>
                         <Route component={NotFound}/>
 
+                    </Switch>
 
+                </div>
+            </BrowserRouter>
+        );
 
-
-                    </div>
-                </BrowserRouter>
-            );
-
-  }
+    }
 }
 
 export default App;

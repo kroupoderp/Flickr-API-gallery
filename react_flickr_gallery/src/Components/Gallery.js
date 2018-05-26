@@ -5,36 +5,27 @@ import PropTypes from 'prop-types'
 import Image from './Image'
 import apiKey from "../config";
 import Spinner from '../Spinner';
+import NoMatches from './NoMatches'
 
 
-class ImageList extends Component {
+
+class Gallery extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
             heading: "title",
             images: [],
-            title: '',
             loading: true,
         }
     }
 
-
     componentDidMount() {
         this.performQuery();
-        console.log('mounted')
     }
-
 
     generatePhotoLinks(obj) {
         return `https://farm${obj.farm}.staticflickr.com/${obj.server}/${obj.id}_${obj.secret}_z.jpg`
-    }
-
-    getTag() {
-        let url = window.location.href;
-        let index = url.lastIndexOf('/');
-        let tag = url.slice(index + 1);
-        return tag;
     }
 
 
@@ -42,24 +33,29 @@ class ImageList extends Component {
 
         this.setState({loading: true});
 
-        let text = this.getTag();
+        let text = this.props.tag;
 
         fetch(`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&text=${text}&per_page=20&format=json&nojsoncallback=1`)
             .then((data) => data.json())
             .then((data) => data.photos.photo)
             .then((data) => data.map(this.generatePhotoLinks))
-            .then((data) => this.setState({images: data, title: text, loading: false}))
+            .then((data) => this.setState({images: data,loading: false}))
             .catch((error) => console.log("There's an error: ", error))
     };
+
 
 
     render() {
 
             if (!this.state.loading) {
 
+                if(this.state.images.length === 0) {
+                    return <NoMatches/>
+                }
+
                 return (
                     <div className="photo-container">
-                        <h2>{this.state.title}</h2>
+                        <h2>{this.props.title}</h2>
                         <ul>
                             {this.state.images.map((url, i) =>
                                 <Image photo_url={url} key={"photo_" + i}/>
@@ -71,16 +67,10 @@ class ImageList extends Component {
 
                 return <Spinner/>
             }
-
-
-
-
-
     }
 }
 
-
-export default ImageList;
+export default Gallery;
 
 
 

@@ -6,14 +6,6 @@ import PropTypes from 'prop-types'
 
 class NavBar extends Component {
 
-    //
-    // link_search = e => {
-    //     if(e.target.tagName === 'A') {
-    //         let query = e.target.textContent;
-    //         this.props.search(query)
-    //     }
-    // };
-
     render() {
         return (
             <nav className="main-nav">
