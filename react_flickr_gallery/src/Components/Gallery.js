@@ -37,11 +37,12 @@ class Gallery extends Component {
         let text = this.props.tag;
 
         fetch(`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&text=${text}&per_page=16&format=json&nojsoncallback=1`)
-            .then((data) => data.json())
+            .then((response) => response.json())
             .then((data) => data.photos.photo)
-            .then((data) => data.map(this.generatePhotoLinks))
-            .then((data) => { if(this._isMounted) {this.setState({images: data,loading: false})}})
-            .catch((error) => console.log("There's an error: ", error))
+            .then((photoInfo) => photoInfo.map(this.generatePhotoLinks))
+            .then((photoLinks) => { if(this._isMounted) {this.setState({images: photoLinks,loading: false})}})
+            .catch(() => alert("Something has gone wrong and there's an error. Try" +
+                                    "refreshing the page or come back later."))
     };
 
     render() {

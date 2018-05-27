@@ -85,12 +85,6 @@ input {
     width: 100%;
 }
 
-
-g {
-    stroke: #1976D2;
-    stroke-width: .1px;
-}
-
 .banner {
     font-size: 22px;
     color: darkslategrey;
@@ -177,7 +171,6 @@ g {
         opacity: 0.25; }
     100% {
         opacity: 0.25; } }
-
 
 /* End of Spinner configuration */
 
