@@ -1,12 +1,9 @@
-
-
 import React, { Component } from 'react';
 import PropTypes from 'prop-types'
 import Image from './Image'
 import apiKey from "../config";
 import Spinner from '../Spinner';
 import NoMatches from './NoMatches'
-
 
 
 class Gallery extends Component {
@@ -21,13 +18,17 @@ class Gallery extends Component {
     }
 
     componentDidMount() {
+        this._isMounted = true;
         this.performQuery();
+    }
+
+    componentWillUnmount() {
+        this._isMounted = false;
     }
 
     generatePhotoLinks(obj) {
         return `https://farm${obj.farm}.staticflickr.com/${obj.server}/${obj.id}_${obj.secret}_z.jpg`
     }
-
 
     performQuery = () => {
 
@@ -39,11 +40,9 @@ class Gallery extends Component {
             .then((data) => data.json())
             .then((data) => data.photos.photo)
             .then((data) => data.map(this.generatePhotoLinks))
-            .then((data) => this.setState({images: data,loading: false}))
+            .then((data) => { if(this._isMounted) {this.setState({images: data,loading: false})}})
             .catch((error) => console.log("There's an error: ", error))
     };
-
-
 
     render() {
 
@@ -69,6 +68,11 @@ class Gallery extends Component {
             }
     }
 }
+
+Gallery.propTypes = {
+  title: PropTypes.string.isRequired,
+  tag: PropTypes.string.isRequired
+};
 
 export default Gallery;
 
