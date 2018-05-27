@@ -17,11 +17,18 @@ class App extends Component {
         window.location.pathname = '/Search/' + text;
     }
 
-
     render() {
 
         let query = window.location.pathname.slice(8);
         let tagName = decodeURI(query);
+
+        // let splitStr = tagName.split(' ');
+        //
+        // for (let i = 0; i < splitStr.length; i++) {
+        //     splitStr[i] = splitStr[i].charAt(0).toUpperCase() + splitStr[i].slice(1);
+        // }
+        //
+        // let title = splitStr.join(' ');
 
         return (
             <BrowserRouter>
@@ -48,7 +55,6 @@ class App extends Component {
                                render={(props) => <SearchResults
                                    title={tagName}
                                    tag={query}/>}/>
-
 
                         <Route component={NotFound}/>
 

@@ -100,22 +100,24 @@ g {
 /*Spinner configuration */
 
 .ispinner {
+    margin: 180px auto;
     position: relative;
     width: 20px;
-    height: 20px; }
+    height: 20px;
 
+}
 
 .ispinner .ispinner__blade {
     position: absolute;
-    left: 480px;
-    top: 180px;
+    left: 7px;
+    top: 0;
     width: 30%;
     height: 75%;
+
+
     border-radius: 50%/20%;
     animation: iSpinnerBlade 1s linear infinite;
     animation-play-state: paused; }
-
-
 
 
 .ispinner .ispinner__blade:nth-child(1) {
