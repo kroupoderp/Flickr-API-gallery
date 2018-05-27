@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class Search extends Component {
 
@@ -21,11 +22,9 @@ class Search extends Component {
         e.preventDefault();
         let search_text = this.state.input_value;
         this.props.performSearch(search_text);
-        this.input.value='';
+        this.input.value = '';
 
     }
-
-
 
     render() {
         return (
@@ -45,4 +44,8 @@ class Search extends Component {
     }
 }
 
-export default Search
+Search.propTypes = {
+  performSearch: PropTypes.func.isRequired
+};
+
+export default Search;

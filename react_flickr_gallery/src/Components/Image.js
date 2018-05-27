@@ -1,6 +1,6 @@
 
 import React from 'react';
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
 
 const Image = (props) => {
 
@@ -9,13 +9,12 @@ const Image = (props) => {
             <img src={props.photo_url} alt=""/>
        </li>
    )
-
 };
 
 Image.propTypes = {
   photo_url: PropTypes.string.isRequired,
 };
 
-export default Image
+export default Image;
 
 

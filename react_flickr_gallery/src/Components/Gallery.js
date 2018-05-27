@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types'
-import Image from './Image'
+import PropTypes from 'prop-types';
+import Image from './Image';
 import apiKey from "../config";
 import Spinner from '../Spinner';
-import NoMatches from './NoMatches'
+import NoMatches from './NoMatches';
 
 
 class Gallery extends Component {
@@ -42,7 +42,7 @@ class Gallery extends Component {
             .then((photoInfo) => photoInfo.map(this.generatePhotoLinks))
             .then((photoLinks) => { if(this._isMounted) {this.setState({images: photoLinks,loading: false})}})
             .catch(() => alert("Something has gone wrong and there's an error. Try" +
-                                    "refreshing the page or come back later."))
+                                    "refreshing the page or come back later."));
     };
 
     render() {
@@ -76,10 +76,3 @@ Gallery.propTypes = {
 };
 
 export default Gallery;
-
-
-
-
-
-
-

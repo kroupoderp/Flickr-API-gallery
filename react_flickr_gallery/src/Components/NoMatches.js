@@ -17,7 +17,6 @@ const NoMatches = () => (
                     data-original="#000000" className="active-path" fill="#1976D2"/>
             </g>
         </svg>
-
     </div>
 );
 

@@ -1,8 +1,5 @@
-
-
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
-import PropTypes from 'prop-types'
 
 class NavBar extends Component {
 
@@ -20,7 +17,3 @@ class NavBar extends Component {
 }
 
 export default NavBar
-
-NavBar.propTypes = {
-  search: PropTypes.func,
-};
