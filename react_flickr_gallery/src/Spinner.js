@@ -23,3 +23,6 @@ const Spinner = () => {
 };
 
 export default Spinner;
+
+// Spinner animation component. There are CSS animation styles declared for the
+// above markup.

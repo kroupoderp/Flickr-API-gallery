@@ -1,7 +1,5 @@
 
-
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import Image from '../Image';
 import apiKey from "../../config";
 import Spinner from '../../Spinner';
@@ -15,13 +13,11 @@ class SearchResults extends Component {
         this.state = {
             images: [],
             loading: true,
-            mounted: false,
+            mounted: false // used for determining if componentDidUpdate should run.
         }
     }
 
-
-
-
+    // runs when user performs second search in a row
     componentWillReceiveProps(nextProps) {
         this.state.loading = true;
         if (nextProps !== this.props) {
@@ -29,19 +25,19 @@ class SearchResults extends Component {
         }
     }
 
+
+    // this function runs when a user does a search for the first time, because
+    // performQuery() updates the state by setting the images changing loading
+    // to false. componentDidUpdate should only run when a user does a second search
+    // in a row - SearchResults will have new props passed to it, making
+    // componentWillReceiveProps run, setting state.mounted to true.
+
     componentDidUpdate() {
         if(this.state.mounted) {
             this.performQuery();
         }
-        this.state.mounted = false;
+        this.state.mounted = false; // prevents continouos 
     }
-
-
-
-
-
-
-
 
 
     componentDidMount() {
@@ -58,8 +54,6 @@ class SearchResults extends Component {
     }
 
     performQuery = () => {
-
-
 
         fetch(`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&text=${this.props.match.params.term}&per_page=16&format=json&nojsoncallback=1`)
             .then((response) => response.json())
@@ -95,10 +89,6 @@ class SearchResults extends Component {
         }
     }
 }
-//
-// SearchResults.propTypes = {
-//     title: PropTypes.string.isRequired,
-//     tag: PropTypes.string.isRequired
-// };
 
 export default SearchResults;
+

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+
 
 class Search extends Component {
 
@@ -18,11 +18,13 @@ class Search extends Component {
         })
     }
 
+
+    // function for changing the pathname in the URL, will make
+    // the SearchResults component render
     submit_input(e) {
         e.preventDefault();
         let search_text = this.state.input_value;
         this.setState({input_value: ''});
-        this.props.performSearch(search_text);
         let path = `/Search/${search_text}`;
         this.props.history.push(path);
 
@@ -45,9 +47,5 @@ class Search extends Component {
         )
     }
 }
-
-Search.propTypes = {
-  performSearch: PropTypes.func.isRequired
-};
 
 export default Search;

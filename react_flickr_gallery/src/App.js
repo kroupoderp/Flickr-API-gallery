@@ -12,18 +12,17 @@ import SearchResults from './Components/Categories/SearchResults';
 
 class App extends Component {
 
-    search = () => {
-        this.forceUpdate();
-    };
-
     render() {
 
         return (
             <BrowserRouter>
                 <div className="holder">
 
-                    <Route render={(props) => <Search performSearch={this.search}
+                    <Route render={(props) => <Search
                                                   history={props.history}/>}/>
+
+                    {/*history object is passed to the Search component, so it can update*/}
+                    {/*the URL by calling this.props.history.push(path);*/}
 
                     <NavBar/>
 
@@ -40,6 +39,9 @@ class App extends Component {
                         <Route exact path="/airplanes"
                                render={(props) => <Airplanes title="Airplanes" tag="airplanes"/>}/>
 
+
+                        {/*:term will be passed to SearchResults and will be used as*/}
+                        {/*a title and tag just like for the above components*/}
                         <Route path="/Search/:term"
                                render={(props) => <SearchResults
                                    match={props.match}/>}/>
