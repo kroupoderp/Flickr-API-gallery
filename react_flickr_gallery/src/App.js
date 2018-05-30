@@ -12,21 +12,18 @@ import SearchResults from './Components/Categories/SearchResults';
 
 class App extends Component {
 
-    search(text) {
-        console.log(text);
-        window.location.pathname = '/Search/' + text;
-    }
+    search = () => {
+        this.forceUpdate();
+    };
 
     render() {
-
-        let query = window.location.pathname.slice(8);
-        let tagName = decodeURI(query);
 
         return (
             <BrowserRouter>
                 <div className="holder">
 
-                    <Search performSearch={this.search}/>
+                    <Route render={(props) => <Search performSearch={this.search}
+                                                  history={props.history}/>}/>
 
                     <NavBar/>
 
@@ -43,10 +40,9 @@ class App extends Component {
                         <Route exact path="/airplanes"
                                render={(props) => <Airplanes title="Airplanes" tag="airplanes"/>}/>
 
-                        <Route path="/Search"
+                        <Route path="/Search/:term"
                                render={(props) => <SearchResults
-                                   title={tagName}
-                                   tag={query}/>}/>
+                                   match={props.match}/>}/>
 
                         <Route component={NotFound}/>
                     </Switch>

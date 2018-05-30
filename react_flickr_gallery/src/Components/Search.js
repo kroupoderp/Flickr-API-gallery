@@ -21,8 +21,10 @@ class Search extends Component {
     submit_input(e) {
         e.preventDefault();
         let search_text = this.state.input_value;
+        this.setState({input_value: ''});
         this.props.performSearch(search_text);
-        this.input.value = '';
+        let path = `/Search/${search_text}`;
+        this.props.history.push(path);
 
     }
 

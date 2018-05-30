@@ -11,10 +11,21 @@ class Gallery extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            heading: "title",
             images: [],
             loading: true,
+            mounted: false,
         }
+    }
+
+
+
+
+
+    componentDidUpdate() {
+        if(this.moun) {
+            this.performQuery();
+        }
+        this.moun = false;
     }
 
     componentDidMount() {
@@ -32,18 +43,35 @@ class Gallery extends Component {
 
     performQuery = () => {
 
-        this.setState({loading: true});
+        let regex = /Search/g;
+        let text;
 
-        let text = this.props.tag;
+        if(regex.test(window.location.pathname)) {
+            text = window.location.pathname.slice(8)
+        } else {
+            text = window.location.pathname.slice(1);
+        }
 
         fetch(`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&text=${text}&per_page=16&format=json&nojsoncallback=1`)
             .then((response) => response.json())
             .then((data) => data.photos.photo)
             .then((photoInfo) => photoInfo.map(this.generatePhotoLinks))
             .then((photoLinks) => { if(this._isMounted) {this.setState({images: photoLinks,loading: false})}})
-            .catch(() => alert("Something has gone wrong and there's an error. Try" +
+            .catch(() => alert("Something has gone wrong and there's an error. Try " +
                                     "refreshing the page or come back later."));
+
+
     };
+
+
+
+
+
+
+
+
+
+
 
     render() {
 
