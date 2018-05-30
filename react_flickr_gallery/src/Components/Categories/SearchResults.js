@@ -30,13 +30,15 @@ class SearchResults extends Component {
     // performQuery() updates the state by setting the images changing loading
     // to false. componentDidUpdate should only run when a user does a second search
     // in a row - SearchResults will have new props passed to it, making
-    // componentWillReceiveProps run, setting state.mounted to true.
+    // componentWillReceiveProps run, setting state.mounted to true. componentDidUpdate
+    // evaluates this.state.mounted, and if it's true, it will call performQuery
+    // (componentDidMount is not calling performQuery anymore)
 
     componentDidUpdate() {
         if(this.state.mounted) {
             this.performQuery();
         }
-        this.state.mounted = false; // prevents continouos 
+        this.state.mounted = false; // prevents continuous fetch calls
     }
 
 
