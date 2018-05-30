@@ -69,7 +69,7 @@ class SearchResults extends Component {
 
     render() {
 
-        if (this.state.loading === false) {
+        if (!this.state.loading) {
 
             if(this.state.images.length === 0) {
                 return <NoMatches/>
