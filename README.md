@@ -9,3 +9,15 @@ A search bar is also included. A user can type any term, and once submitted imag
 There are additional components: once that get's rendered when no images can be found relative to the search term typed in, and another that is rendered whenever a user navigates to a page that does not exist.
 
 <img width="1280" alt="img-1" src="https://user-images.githubusercontent.com/23324252/40880553-4748fd46-6681-11e8-8247-f8af0849652f.png">
+
+<img width="1280" alt="img-2" src="https://user-images.githubusercontent.com/23324252/40880647-c5ae9a32-6682-11e8-8dcc-1557f34bfe3d.png">
+
+<img width="1280" alt="img-3" src="https://user-images.githubusercontent.com/23324252/40880650-d2fa3eda-6682-11e8-910b-6f4f2b2b2954.png">
+
+<img width="1280" alt="img-4" src="https://user-images.githubusercontent.com/23324252/40880653-da728b7c-6682-11e8-8739-113bd675477d.png">
+
+<img width="1280" alt="img-5" src="https://user-images.githubusercontent.com/23324252/40880659-e63b880a-6682-11e8-8667-d82fa89a0017.png">
+
+<img width="1280" alt="img-6" src="https://user-images.githubusercontent.com/23324252/40880663-f13d1ffc-6682-11e8-9610-e812efcf83ba.png">
+
+<img width="1280" alt="img-7" src="https://user-images.githubusercontent.com/23324252/40880665-fb143a9c-6682-11e8-8910-927845f78169.png">
