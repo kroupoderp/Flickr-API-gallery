@@ -6,4 +6,8 @@ Every time a user navigates to the root of the app (localhost:3000/), they are r
 
 A search bar is also included. A user can type any term, and once submitted images will be retrieved relative to the term typed in. Since a user can perform two searches in a row, the SearchResults Component, which is rendered when a user performs a search, will get updated. The Fetch call will then be made via the component's componentDidUpdate() method. When performing a search the page also won't refresh and a user can navigate back forth using the the browser history buttons.
 
-There are additional components: once that get's rendered when no images can be found relative to the search term typed in, and another that is rendered whenever a user navigates to a page that does not exist.  
+There are additional components: once that get's rendered when no images can be found relative to the search term typed in, and another that is rendered whenever a user navigates to a page that does not exist.
+
+
+
+![alt text](https://https://github.com/kroupoderp/React-Flickr-gallery-Techdegree-project-11/blob/master/images/img-1.png) 
