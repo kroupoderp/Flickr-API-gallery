@@ -4,7 +4,7 @@ import React from 'react';
 
 const NoMatches = () => (
     <div className="main-content not-found">
-        <h2>Oh No!!! No results have been returned.</h2>
+        <h2>Oh No!!! No results were returned.</h2>
         <svg xmlns="http://www.w3.org/2000/svg" width="192" height="192" viewBox="0 0 64 64">
             <g fill="#1976D2">
                 <path
