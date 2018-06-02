@@ -8,6 +8,4 @@ A search bar is also included. A user can type any term, and once submitted imag
 
 There are additional components: once that get's rendered when no images can be found relative to the search term typed in, and another that is rendered whenever a user navigates to a page that does not exist.
 
-
-
-![alt text](https://https://github.com/kroupoderp/React-Flickr-gallery-Techdegree-project-11/blob/master/images/img-1.png) 
+<img width="1280" alt="img-1" src="https://user-images.githubusercontent.com/23324252/40880553-4748fd46-6681-11e8-8247-f8af0849652f.png">
