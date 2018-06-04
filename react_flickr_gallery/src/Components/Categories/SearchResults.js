@@ -41,7 +41,6 @@ class SearchResults extends Component {
         this.state.mounted = false; // prevents continuous fetch calls
     }
 
-
     componentDidMount() {
         this._isMounted = true;
         this.performQuery();
