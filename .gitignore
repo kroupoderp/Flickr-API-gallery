@@ -2,3 +2,4 @@
 react_flickr_gallery/src/config.js
 *.xml
 *.iml
+.DS_Store
