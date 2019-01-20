@@ -95,6 +95,8 @@ input {
 }
 
 .overlay {
+    margin: 0;
+    padding: 0;
     height: 100%;
     width: 100%;
     background: rgba(0,0,0,.3);
@@ -105,13 +107,22 @@ input {
 
 .overlayText {
     color: white;
+    font-weight: bolder;
     padding: 0;
     margin: 0;
 }
 
-.overlayText:hover {
-    cursor: pointer;
+.text {
+    display: block;
+    color: white;
+    font-weight: bolder;
+    padding: 0;
+    margin: 0;
 }
+
+/* .overlayText:hover {
+    cursor: pointer;
+} */
 
 .photo-container .not-found {
     width: 100%
