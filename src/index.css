@@ -21,6 +21,7 @@ a {
 .search-form {
     max-width: 460px;
     display: -ms-flexbox;
+    display: -webkit-box;
     display: flex;
     margin: 0 auto 32px
 }
@@ -72,14 +73,19 @@ input {
 
 .photo-container ul {
     display: -ms-flexbox;
+    display: -webkit-box;
     display: flex;
     -ms-flex-flow: row wrap;
-    flex-flow: row wrap;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+            flex-flow: row wrap;
     -ms-flex-pack: justify;
-    justify-content: space-between;
+    -webkit-box-pack: justify;
+            justify-content: space-between;
     -ms-align-items: flex-start;
     -ms-flex-align: start;
-    align-items: flex-start
+    -webkit-box-align: start;
+            align-items: flex-start
 }
 
 .photo-container ul li {
@@ -99,7 +105,7 @@ input {
     padding: 0;
     height: 100%;
     width: 100%;
-    background: rgba(0,0,0,.3);
+    background: rgba(0,0,0,.4);
     position: absolute;
     top: 0px;
     z-index: 1000;
@@ -112,12 +118,28 @@ input {
     margin: 0;
 }
 
+svg {
+    padding-right: 3px;
+}
+
 .text {
     display: block;
     color: white;
     font-weight: bolder;
-    padding: 0;
+    padding: 0 0 0 3px;
     margin: 0;
+}
+
+.wrapper {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
 }
 
 /* .overlayText:hover {
@@ -317,9 +339,11 @@ input {
     }
     .main-nav ul {
         display: -ms-flexbox;
+        display: -webkit-box;
         display: flex;
         -ms-flex-pack: center;
-        justify-content: center
+        -webkit-box-pack: center;
+                justify-content: center
     }
     .main-nav li {
         margin: 10px;

@@ -51,7 +51,8 @@ class SearchResults extends Component {
     }
 
     generatePhotoLinks(obj) {
-        return `https://farm${obj.farm}.staticflickr.com/${obj.server}/${obj.id}_${obj.secret}_z.jpg`
+        return { source: `https://farm${obj.farm}.staticflickr.com/${obj.server}/${obj.id}_${obj.secret}_z.jpg`,
+                 origin: `https://flickr.com/photos/${obj.owner}/${obj.id}/`}
     }
 
     performQuery = () => {
@@ -79,7 +80,7 @@ class SearchResults extends Component {
                     <h2>{this.props.match.params.term}</h2>
                     <ul>
                         {this.state.images.map((url, i) =>
-                            <Image photo_url={url} key={"photo_" + i}/>
+                            <Image origin={url.origin} photo_url={url.source} key={"photo_" + i}/>
                         )}
                     </ul>
                 </div>

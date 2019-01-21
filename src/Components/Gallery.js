@@ -27,7 +27,8 @@ class Gallery extends Component {
 
     // function for creating a Flickr photo URL from the fetch response data
     generatePhotoLinks(obj) {
-        return `https://farm${obj.farm}.staticflickr.com/${obj.server}/${obj.id}_${obj.secret}_z.jpg`
+        return { source: `https://farm${obj.farm}.staticflickr.com/${obj.server}/${obj.id}_${obj.secret}_z.jpg`,
+                 origin: `https://flickr.com/photos/${obj.owner}/${obj.id}/`}
     }
 
     performQuery = () => {
@@ -35,7 +36,7 @@ class Gallery extends Component {
             .then((response) => response.json())
             .then((data) => data.photos.photo)
             .then((photoInfo) => photoInfo.map(this.generatePhotoLinks))
-            .then((photoLinks) => { if(this._isMounted) {this.setState({images: photoLinks,loading: false})}})
+            .then((photoLinks) => { if(this._isMounted) {this.setState({images: photoLinks, loading: false})}})
             .catch(() => alert("Something has gone wrong and there's an error. Try " +
                 "refreshing the page or come back later."));
         };
@@ -51,7 +52,7 @@ class Gallery extends Component {
                     <h2>{this.props.title}</h2>
                     <ul>
                         {this.state.images.map((url, i) =>
-                            <Image photo_url={url} key={"photo_" + i}/>
+                            <Image origin={url.origin} photo_url={url.source} key={"photo_" + i} />
                         )}
                     </ul>
                 </div>
