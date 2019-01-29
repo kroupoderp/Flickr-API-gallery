@@ -11,6 +11,7 @@ class SearchResults extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            imageWithOverlay: null,
             images: [],
             loading: true,
             mounted: false // used for determining if componentDidUpdate should run.
@@ -44,6 +45,25 @@ class SearchResults extends Component {
     componentDidMount() {
         this._isMounted = true;
         this.performQuery();
+
+        function changeState(e) {
+            let elm = e.target
+            if (elm.dataset.key) {
+                this.setState({
+                    imageWithOverlay: parseInt(e.target.dataset.key)
+                })
+            } else 
+            if (elm.tagName === 'BODY' || elm.className === 'holder' ||
+            elm.tagName === 'UL' || elm.tagName === 'LI' 
+            || elm.className === "photo-container") {
+                this.setState({
+                    imageWithOverlay: null,
+                })
+            }
+        }
+        changeState = changeState.bind(this)
+        let body = document.getElementsByTagName("body")[0]
+        body.addEventListener('mouseover', changeState) 
     }
 
     componentWillUnmount() {
@@ -80,7 +100,11 @@ class SearchResults extends Component {
                     <h2>{this.props.match.params.term}</h2>
                     <ul>
                         {this.state.images.map((url, i) =>
-                            <Image origin={url.origin} photo_url={url.source} key={"photo_" + i}/>
+                            {if (this.state.imageWithOverlay === i) {
+                                return <Image hovering={true} key={"photo_" + i} label={i} origin={url.origin} photo_url={url.source} />
+                            } else {
+                                return <Image hovering={false} key={"photo_" + i} label={i} origin={url.origin} photo_url={url.source} />
+                            }}
                         )}
                     </ul>
                 </div>

@@ -28,7 +28,7 @@ a {
 
 .search-form button {
     outline: none;
-    background-color: #438bbd;
+    background-color: #006ac3;
     border: none;
     padding: 0 15px;
     border-radius: 0 .35em .35em 0;
@@ -46,20 +46,9 @@ input {
     outline: none
 }
 
-.loading {
-    margin-top: 180px;
-    color: #a9a9a9;
-    opacity: .3
-}
-
-.main-nav li {
-    width: 100%;
-    margin-bottom: 1em
-}
-
 .main-nav a {
     display: block;
-    background: #438bbd;
+    background: #006ac3;
     border-radius: 3px;
     padding: 5px;
     color: #fff
@@ -71,34 +60,65 @@ input {
     background-color: #275270
 }
 
+.main-nav li {
+    width: 100%;
+    margin-bottom: 1em
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .photo-container ul {
-    display: -ms-flexbox;
-    display: -webkit-box;
-    display: flex;
-    -ms-flex-flow: row wrap;
-    -webkit-box-orient: horizontal;
-    -webkit-box-direction: normal;
-            flex-flow: row wrap;
-    -ms-flex-pack: justify;
-    -webkit-box-pack: justify;
-            justify-content: space-between;
-    -ms-align-items: flex-start;
-    -ms-flex-align: start;
-    -webkit-box-align: start;
-            align-items: flex-start
+    line-height: 0;
+    /* display: flex; */
+    /* flex-flow: row wrap; */
+    /* justify-content: space-between; */
+    /* align-items: flex-start; */
+    column-count: 4;
+    column-gap: 4px !important;
 }
 
 .photo-container ul li {
-    width: 220px;
-    height: 165px;
-    overflow: hidden;
-    margin-bottom: 15px;
+    /* width: 220px;
+    height: 165px; */
+    width: 100% !important;
+    height: auto !important;
+    /* overflow: hidden; */
+    margin-bottom: 4px;
     position: relative;
 }
 
 .photo-container ul img {
     width: 100%;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Overlay configuration */
 
 .overlay {
     margin: 0;
@@ -108,7 +128,7 @@ input {
     background: rgba(0,0,0,.4);
     position: absolute;
     top: 0px;
-    z-index: 1000;
+    /* z-index: 1000; */
 }
 
 .overlayText {
@@ -116,10 +136,6 @@ input {
     font-weight: bolder;
     padding: 0;
     margin: 0;
-}
-
-svg {
-    padding-right: 3px;
 }
 
 .text {
@@ -131,20 +147,18 @@ svg {
 }
 
 .wrapper {
-    display: -webkit-box;
-    display: -ms-flexbox;
     display: flex;
-    -webkit-box-pack: center;
-        -ms-flex-pack: center;
-            justify-content: center;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
+    justify-content: center;
+    align-items: center;
 }
 
-/* .overlayText:hover {
-    cursor: pointer;
-} */
+
+/* End of overlay configuration */
+
+svg {
+    padding-right: 3px;
+}
+
 
 .photo-container .not-found {
     width: 100%
@@ -155,6 +169,10 @@ svg {
     color: #2f4f4f;
     margin-top: 4em
 }
+
+
+
+/* Spinner configuration */
 
 .ispinner {
     margin: 180px auto;
@@ -320,23 +338,42 @@ svg {
     }
 }
 
+/* End of Spinner configuration */
+
+
+
+
+
+
+
+
 @media only screen and (max-width:767px) {
     body {
         padding-top: 2em
     }
+
+
+
+
     .photo-container li {
         margin: auto
     }
+
+
+
 }
 
 @media only screen and (min-width:768px) {
     body {
         padding-top: 4em
     }
+
+    /* container contains all HTML elements*/
     .container {
         max-width: 960px;
         margin: 0 auto 4em
     }
+    
     .main-nav ul {
         display: -ms-flexbox;
         display: -webkit-box;

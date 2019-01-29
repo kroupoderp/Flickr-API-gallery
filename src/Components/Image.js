@@ -4,44 +4,23 @@ import PropTypes from 'prop-types';
 
 class Image extends React.Component {
 
-  constructor(props) {
-    super(props)
-    this.state = {
-      hover: false
-    }
-    this.hover = this.hover.bind(this)
-    this.leave = this.leave.bind(this)
-  }
-
   componentDidUpdate() {
-    console.log(this.props)
-    if (this.state.hover) {
-      let imgHeight = this.image.height
-      if(imgHeight > 165) {
-        this.overlay.style.height = '165px'
-        this.text.style.lineHeight = '165px'
-      } else {
+    if(this.props.hovering) {
+        let imgHeight = this.image.offsetHeight
         this.overlay.style.height = imgHeight + 'px'
         this.text.style.lineHeight = imgHeight + 'px'
-      }
     }
-  }
-
-  hover() {
-    this.setState({hover: true})
-  }
-  leave() {
-    this.setState({hover: false})
   }
 
   render() {
+    if (!/Android|webOS|iPhone|iPad|BlackBerry|Windows Phone|Opera Mini|IEMobile|Mobile/i.test(navigator.userAgent)) {
     return (
-      <li>
-        {this.state.hover ?
-        <div onMouseLeave={this.leave} onMouseOver={this.hover}>
-          <img ref={ el => {this.image = el} } src={this.props.photo_url} alt=""/>
-          <div ref={ el => {this.overlay = el } }  className="overlay">
-          <div ref = { el => {this.text = el } } className="overlayText">
+      <li style={this.props.styles}>
+        {this.props.hovering ?
+        <div className="holder">
+          <img ref={ el => {this.image = el}} src={this.props.photo_url} alt="" data-key={this.props.label}/>
+          <div ref={ el => {this.overlay = el}}  className="overlay">
+          <div ref={ el => {this.text = el}} className="overlayText">
             <a href={this.props.origin} className="wrapper">
               <svg data-author="https://www.flaticon.com/authors/dave-gandy" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 511.626 511.627">
                 <g fill="#fff">
@@ -55,16 +34,26 @@ class Image extends React.Component {
           </div>
         </div> :
 
-        <img onMouseOver={this.hover} src={this.props.photo_url} alt=""/>
+        <img onLoad={this.props.loader} data-key={this.props.label} src={this.props.photo_url} alt=""/>
       }
       </li>
     )
+    } else {
+      return (
+        <li>
+          <a href={this.props.origin} className="wrapper">
+            <img src={this.props.photo_url} alt=""/>
+          </a>
+        </li>
+      )
+    }
   }
 }
 
 Image.propTypes = {
   photo_url: PropTypes.string.isRequired,
-  origin: PropTypes.string,
+  origin: PropTypes.string.isRequired,
+  hovering: PropTypes.bool.isRequired,
 };
 
 export default Image;
