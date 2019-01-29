@@ -71,14 +71,6 @@ class Gallery extends Component {
         return true;
     }    
 
-
-    renderSpinner() {
-        if (!this.state.loading) {
-            return null
-        }
-        return <Spinner />
-    }
-
     handleStateChange() {
         this.setState({
             loading: !this.imagesLoaded()
@@ -94,14 +86,13 @@ class Gallery extends Component {
             return (
                 <div className="photo-container">
                     <h2>{this.props.title}</h2>
+                    {this.state.loading ? <Spinner /> : null}
                     <ul>
-                        {/* spinner could also go here     */}
-                        {this.renderSpinner()}
                         {this.state.images.map((url, i) =>
                             {if (this.state.imageWithOverlay === i) {
-                                return <Image  hovering={true} key={"photo_" + i} label={i} origin={url.origin} photo_url={url.source} />
+                                return <Image hovering={true} key={"photo_" + i} label={i} origin={url.origin} photo_url={url.source} />
                             } else {
-                                return <Image styles={style} loader={this.handleStateChange} hovering={false} key={"photo_" + i} label={i} origin={url.origin} photo_url={url.source} />
+                                return <Image loader={this.handleStateChange} styles={style} hovering={false} key={"photo_" + i} label={i} origin={url.origin} photo_url={url.source} />
                             }}
                         )}
                     </ul>

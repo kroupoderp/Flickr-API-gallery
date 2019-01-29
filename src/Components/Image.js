@@ -40,9 +40,9 @@ class Image extends React.Component {
     )
     } else {
       return (
-        <li>
+        <li style={this.props.styles}>
           <a href={this.props.origin} className="wrapper">
-            <img src={this.props.photo_url} alt=""/>
+            <img onLoad={this.props.loader} src={this.props.photo_url} alt=""/>
           </a>
         </li>
       )
