@@ -78,7 +78,7 @@ class Gallery extends Component {
     }
 
     render() {
-            const style = this.state.loading ? {'display': 'none'} : {'display':'inline-block'}
+            const style = this.state.loading ? {'display': 'none'} : {}
 
             if(this.state.images.length === 0 && !this.state.loading) {
                 return <NoMatches/>
