@@ -6,7 +6,7 @@ class Image extends React.Component {
 
   componentDidUpdate() {
     if(this.props.hovering) {
-        let imgHeight = this.image.offsetHeight
+        let imgHeight = this.image.clientHeight
         this.overlay.style.height = imgHeight + 'px'
         this.text.style.lineHeight = imgHeight + 'px'
     }

@@ -16,6 +16,7 @@ class SearchResults extends Component {
             loading: true,
             mounted: false // used for determining if componentDidUpdate should run.
         }
+        this.handleStateChange = this.handleStateChange.bind(this)
     }
 
     // runs when user performs second search in a row
@@ -81,38 +82,52 @@ class SearchResults extends Component {
             .then((response) => response.json())
             .then((data) => data.photos.photo)
             .then((photoInfo) => photoInfo.map(this.generatePhotoLinks))
-            .then((photoLinks) => { if(this._isMounted) {this.setState({images: photoLinks,loading: false})}})
+            .then((photoLinks) => { if(this._isMounted) {this.setState({images: photoLinks})}})
             .catch(() => alert("Something has gone wrong and there's an error. Try " +
                 "refreshing the page or come back later."));
 
     };
 
+    imagesLoaded() {
+        const imgElements = document.querySelectorAll("img");
+        for (const img of imgElements) {
+            if (!img.complete) {
+            return false;
+            }
+        }
+        return true;
+    }    
+
+    handleStateChange() {
+        this.setState({
+            loading: !this.imagesLoaded()
+        })
+    }
+
     render() {
 
-        if (!this.state.loading) {
+        const style = this.state.loading ? {'display': 'none'} : {}
 
-            if(this.state.images.length === 0) {
-                return <NoMatches/>
-            }
+        if(this.state.images.length === 0 && !this.state.loading) {
+            return <NoMatches/>
+        }
 
             return (
                 <div className="photo-container">
                     <h2>{this.props.match.params.term}</h2>
+                    {this.state.loading ? <Spinner /> : null}
                     <ul>
                         {this.state.images.map((url, i) =>
                             {if (this.state.imageWithOverlay === i) {
                                 return <Image hovering={true} key={"photo_" + i} label={i} origin={url.origin} photo_url={url.source} />
                             } else {
-                                return <Image hovering={false} key={"photo_" + i} label={i} origin={url.origin} photo_url={url.source} />
+                                return <Image loader={this.handleStateChange} styles={style} hovering={false} key={"photo_" + i} label={i} origin={url.origin} photo_url={url.source} />
                             }}
                         )}
                     </ul>
                 </div>
             )
-        }   else {
-
-            return <Spinner/>
-        }
+      
     }
 }
 
