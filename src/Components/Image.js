@@ -4,19 +4,19 @@ import PropTypes from 'prop-types';
 
 class Image extends React.Component {
 
-  componentDidUpdate() {
-    if(this.props.hovering) {
-        let imgHeight = this.image.clientHeight
-        this.overlay.style.height = imgHeight + 'px'
-        this.text.style.lineHeight = imgHeight + 'px'
-    }
-  }
+  // componentDidUpdate() {
+  //   if(this.props.hovering) {
+  //       let imgHeight = this.image.clientHeight
+  //       this.overlay.style.height = imgHeight + 'px'
+  //       this.text.style.lineHeight = imgHeight + 'px'
+  //   }
+  // }
 
   render() {
-    if (!/Android|webOS|iPhone|iPad|BlackBerry|Windows Phone|Opera Mini|IEMobile|Mobile/i.test(navigator.userAgent)) {
+    // if (!/Android|webOS|iPhone|iPad|BlackBerry|Windows Phone|Opera Mini|IEMobile|Mobile/i.test(navigator.userAgent)) {
     return (
       <li style={this.props.styles}>
-        {this.props.hovering ?
+        {/* {this.props.hovering ?
         <div className="holder">
           <img ref={ el => {this.image = el}} src={this.props.photo_url} alt="" data-key={this.props.label}/>
           <div ref={ el => {this.overlay = el}}  className="overlay">
@@ -32,28 +32,27 @@ class Image extends React.Component {
             </a>  
           </div>
           </div>
-        </div> :
+        </div> : */}
 
         <img onLoad={this.props.loader} data-key={this.props.label} src={this.props.photo_url} alt=""/>
-      }
       </li>
     )
-    } else {
-      return (
-        <li style={this.props.styles}>
-          <a href={this.props.origin} className="wrapper">
-            <img onLoad={this.props.loader} src={this.props.photo_url} alt=""/>
-          </a>
-        </li>
-      )
-    }
+    // } else {
+    //   return (
+    //     <li style={this.props.styles}>
+    //       <a href={this.props.origin} className="wrapper">
+    //         <img onLoad={this.props.loader} src={this.props.photo_url} alt=""/>
+    //       </a>
+    //     </li>
+    //   )
+    // }
   }
 }
 
 Image.propTypes = {
   photo_url: PropTypes.string.isRequired,
-  origin: PropTypes.string.isRequired,
-  hovering: PropTypes.bool.isRequired,
+  // origin: PropTypes.string.isRequired,
+  // hovering: PropTypes.bool.isRequired,
 };
 
 export default Image;

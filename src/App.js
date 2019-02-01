@@ -16,7 +16,7 @@ class App extends Component {
 
         return (
             <BrowserRouter>
-                <div className="holder">
+                <React.Fragment>
 
                     <Route render={(props) => <Search
                                                   history={props.history}/>}/>
@@ -48,7 +48,7 @@ class App extends Component {
                         <Route component={NotFound}/>
                     </Switch>
 
-                </div>
+                </React.Fragment>
             </BrowserRouter>
         );
 

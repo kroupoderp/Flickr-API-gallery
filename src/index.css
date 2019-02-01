@@ -1,7 +1,8 @@
 body {
     text-align: center;
     font-family: Open Sans, sans-serif;
-    color: #3f4850
+    color: #3f4850;
+    margin: 0;
 }
 
 h2 {
@@ -11,7 +12,11 @@ h2 {
 
 ul {
     list-style-type: none;
-    padding-left: 0
+    padding-left: 0;
+}
+
+ul:nth-child(2) {
+    margin-bottom: 200px;
 }
 
 a {
@@ -156,6 +161,7 @@ input {
 svg {
     padding-right: 3px;
 }
+
 
 
 .photo-container .not-found {

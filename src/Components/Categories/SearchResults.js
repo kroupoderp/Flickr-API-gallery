@@ -47,24 +47,24 @@ class SearchResults extends Component {
         this._isMounted = true;
         this.performQuery();
 
-        function changeState(e) {
-            let elm = e.target
-            if (elm.dataset.key) {
-                this.setState({
-                    imageWithOverlay: parseInt(e.target.dataset.key)
-                })
-            } else 
-            if (elm.tagName === 'BODY' || elm.className === 'holder' ||
-            elm.tagName === 'UL' || elm.tagName === 'LI' 
-            || elm.className === "photo-container") {
-                this.setState({
-                    imageWithOverlay: null,
-                })
-            }
-        }
-        changeState = changeState.bind(this)
-        let body = document.getElementsByTagName("body")[0]
-        body.addEventListener('mouseover', changeState) 
+        // function changeState(e) {
+        //     let elm = e.target
+        //     if (elm.dataset.key) {
+        //         this.setState({
+        //             imageWithOverlay: parseInt(e.target.dataset.key)
+        //         })
+        //     } else 
+        //     if (elm.tagName === 'BODY' || elm.className === 'holder' ||
+        //     elm.tagName === 'UL' || elm.tagName === 'LI' 
+        //     || elm.className === "photo-container") {
+        //         this.setState({
+        //             imageWithOverlay: null,
+        //         })
+        //     }
+        // }
+        // changeState = changeState.bind(this)
+        // let body = document.getElementsByTagName("body")[0]
+        // body.addEventListener('mouseover', changeState) 
     }
 
     componentWillUnmount() {
@@ -78,7 +78,7 @@ class SearchResults extends Component {
 
     performQuery = () => {
 
-        fetch(`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&text=${this.props.match.params.term}&per_page=16&format=json&nojsoncallback=1`)
+        fetch(`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&text=${this.props.match.params.term}&per_page=40&format=json&nojsoncallback=1`)
             .then((response) => response.json())
             .then((data) => data.photos.photo)
             .then((photoInfo) => photoInfo.map(this.generatePhotoLinks))
@@ -118,11 +118,11 @@ class SearchResults extends Component {
                     {this.state.loading ? <Spinner /> : null}
                     <ul>
                         {this.state.images.map((url, i) =>
-                            {if (this.state.imageWithOverlay === i) {
-                                return <Image hovering={true} key={"photo_" + i} label={i} origin={url.origin} photo_url={url.source} />
-                            } else {
-                                return <Image loader={this.handleStateChange} styles={style} hovering={false} key={"photo_" + i} label={i} origin={url.origin} photo_url={url.source} />
-                            }}
+                            // {if (this.state.imageWithOverlay === i) {
+                            //     return <Image hovering={true} key={"photo_" + i} label={i} origin={url.origin} photo_url={url.source} />
+                            // } else {
+                                {return <Image loader={this.handleStateChange} styles={style} hovering={false} key={"photo_" + i} label={i} origin={url.origin} photo_url={url.source} />}
+                            // }}
                         )}
                     </ul>
                 </div>
