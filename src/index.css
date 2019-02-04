@@ -74,12 +74,13 @@ input {
 
 
 
-
-
 /* Start of image gallery styles */
 
 .photo-container ul {
+    margin-bottom: 320px;
+    display: -ms-grid;
     display: grid;
+    -ms-grid-columns: 25% 4px 25% 4px 25% 4px 25%;
     grid-template-columns: 25% 25% 25% 25%;
     grid-column-gap: 4px;
     grid-row-gap: 4px;
@@ -88,7 +89,6 @@ input {
 .photo-container ul li {
     width: 100% !important;
     height: auto !important;
-    margin-bottom: 4px;
     position: relative;
     max-height: 220px;
     overflow: hidden;
@@ -97,11 +97,13 @@ input {
 .photo-container ul img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    -o-object-fit: cover;
+       object-fit: cover;
 }
 
 @media (max-width: 768px) {
     .photo-container ul {
+        -ms-grid-columns: 33.33% 33.33% 33.33%;
         grid-template-columns: 33.33% 33.33% 33.33%;
     }
 }
@@ -170,13 +172,18 @@ svg {
     margin-top: 4em
 }
 
+.loadingMoreContainer {
+    height: 20px;
+}
+
 /* Spinner configuration */
+
 
 .ispinner {
     margin: 130px auto;
     position: relative;
     width: 20px;
-    height: 20px
+    height: 20px;
 }
 
 .ispinner .ispinner__blade {

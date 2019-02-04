@@ -2,10 +2,10 @@
 
 import React from 'react';
 
-const Spinner = () => {
+const Spinner = (props) => {
 
     return (
-        <div className="ispinner ispinner--animating ispinner--gray">
+        <div style={{bottom: props.position}} className="ispinner ispinner--animating ispinner--gray">
             <div className="ispinner__blade"></div>
             <div className="ispinner__blade"></div>
             <div className="ispinner__blade"></div>

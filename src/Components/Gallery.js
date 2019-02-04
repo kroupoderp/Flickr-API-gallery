@@ -3,6 +3,9 @@ import Image from './Image';
 import apiKey from "../config";
 import Spinner from '../Spinner';
 import NoMatches from './NoMatches';
+import $ from 'jquery';
+
+let pageNumber = 1;
 
 class Gallery extends Component {
 
@@ -11,7 +14,8 @@ class Gallery extends Component {
         this.state = {
             imageWithOverlay: null,
             images: [],
-            loading: true   // used for the loading animation
+            loading: true,   // used for the loading animation
+            loadingMore: false,
         }
         this.handleStateChange = this.handleStateChange.bind(this)
     }
@@ -19,62 +23,90 @@ class Gallery extends Component {
     componentDidMount() {
         this.count = 0;
         this._isMounted = true;
-        this.performQuery();
+        this.performQuery(pageNumber);
 
-        // function changeState(e) {
-        //     let elm = e.target
-        //     if (elm.dataset.key) {
-        //         this.setState({
-        //             imageWithOverlay: parseInt(e.target.dataset.key)
-        //         })
-        //     } else 
-        //     if (elm.tagName === 'BODY' || elm.className === 'holder' ||
-        //     elm.tagName === 'UL' || elm.tagName === 'LI' 
-        //     || elm.className === "photo-container") {
-        //         this.setState({
-        //             imageWithOverlay: null,
-        //         })
-        //     }
-        // }
-        // changeState = changeState.bind(this)
-        // let body = document.getElementsByTagName("body")[0]
-        // body.addEventListener('mouseover', changeState) 
+        $(window).scroll(() => {
+
+            if (Math.ceil($(window).scrollTop() + $(window).height()) === $(document).outerHeight()) {
+                setTimeout(() => {
+                    if (!this.state.loading) {
+                        pageNumber += 1;
+                        console.log('bottom')
+                        this.setState({loadingMore: true})
+                    }
+                }, 500)
+            }
+        })
     }
 
-    componentWillUnmount() {            // stops any unfinished async operation
+    componentDidUpdate() {
+        if (pageNumber > 1 && this.state.loadingMore) {
+            this.performQuery(pageNumber)
+        }
+    }
+
+    componentWillUnmount() {
         this._isMounted = false;
+        pageNumber = 1;
     }
 
-    // function for creating a Flickr photo URL from the fetch response data
     generatePhotoLinks(obj) {
         return { source: `https://farm${obj.farm}.staticflickr.com/${obj.server}/${obj.id}_${obj.secret}_z.jpg`,
                  origin: `https://flickr.com/photos/${obj.owner}/${obj.id}/`}
     }
 
-    performQuery = () => {
-        fetch(`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&text=${this.props.tag}&per_page=8&format=json&nojsoncallback=1`)
+    performQuery = (page) => {
+        fetch(`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&text=${this.props.tag}&per_page=24&page=${page}&format=json&nojsoncallback=1`)
             .then((response) => response.json())
             .then((data) => data.photos.photo)
             .then((photoInfo) => photoInfo.map(this.generatePhotoLinks))
-            .then((photoLinks) => { if(this._isMounted) {this.setState({images: photoLinks})}})
+            .then((photoLinks) => { if(this._isMounted) {
+                    if (pageNumber === 1) {
+                        this.setState({images: photoLinks})
+                    } else {
+                        this.setState((prevState) => {
+                            return {
+                                loadingMore: false,
+                                images: [
+                                    ...prevState.images,
+                                    ...photoLinks,
+                                ]
+                            }
+                        })
+                    }
+                }
+            
+            })
             .catch(() => alert("Something has gone wrong and there's an error. Try " +
                 "refreshing the page or come back later."));
         };
 
     imagesLoaded() {
-        const imgElements = document.querySelectorAll("img");
+        let imgElements = document.querySelectorAll("img");
+
+        if (pageNumber > 1) {
+            imgElements = [...imgElements].slice(this.previousImageCount)
+        }
+
         for (const img of imgElements) {
             if (!img.complete) {
             return false;
             }
         }
         return true;
-    }    
+    } 
 
     handleStateChange() {
-        this.setState({
-            loading: !this.imagesLoaded()
-        })
+        if (pageNumber === 1) {
+            this.setState({
+                loading: !this.imagesLoaded()
+            })
+        } else {
+            this.previousImageCount = this.state.images.length;
+            this.setState({
+                loadingMore: !this.imagesLoaded()
+            })
+        }
     }
 
     render() {
@@ -86,7 +118,7 @@ class Gallery extends Component {
             return (
                 <div className="photo-container">
                     <h2>{this.props.title}</h2>
-                    {this.state.loading ? <Spinner /> : null}
+                    {this.state.loading ? <Spinner position="0px" /> : null}
                     <ul>
                         {this.state.images.map((url, i) =>
                             // {if (this.state.imageWithOverlay === i) {
@@ -96,7 +128,9 @@ class Gallery extends Component {
                             // }}
                         )}
                     </ul>
-                    {/* The spinner for loading more images can appear here */}
+                    <div className="loadingMoreContainer">
+                        {this.state.loadingMore ? <Spinner position="130px" /> : null}
+                    </div>
                 </div>
             )
     }
