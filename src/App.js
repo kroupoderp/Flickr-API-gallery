@@ -4,7 +4,7 @@ import Search from './Components/Search';
 import NavBar from './Components/NavBar';
 import {BrowserRouter, Route, Redirect, Switch} from 'react-router-dom';
 import NotFound from './Components/NotFound';
-import Cars from './Components/Categories/Cars';
+import Trains from './Components/Categories/Trains';
 import Ships from './Components/Categories/Ships';
 import Airplanes from './Components/Categories/Airplanes';
 import SearchResults from './Components/Categories/SearchResults';
@@ -27,11 +27,11 @@ class App extends Component {
                     <NavBar/>
 
                     <Route exact path="/"
-                           render={() => <Redirect to="/cars"/>}/>
+                           render={() => <Redirect to="/trains"/>}/>
 
                     <Switch>
-                        <Route exact path="/cars"
-                               render={(props) => <Cars title="Cars" tag="cars"/>}/>
+                        <Route exact path="/trains"
+                               render={(props) => <Trains title="Trains" tag="trains"/>}/>
 
                         <Route exact path="/ships"
                                render={(props) => <Ships title="Ships" tag="ships"/>}/>

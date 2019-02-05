@@ -7,7 +7,7 @@ class NavBar extends Component {
         return (
             <nav className="main-nav">
                 <ul>
-                    <li tabIndex={0}><NavLink exact to="/cars">Cars</NavLink></li>
+                    <li tabIndex={0}><NavLink exact to="/trains">Trains</NavLink></li>
                     <li tabIndex={0}><NavLink exact to="/ships">Ships</NavLink></li>
                     <li tabIndex={0}><NavLink exact to="/airplanes">Airplanes</NavLink></li>
                 </ul>

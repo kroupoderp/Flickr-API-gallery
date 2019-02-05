@@ -3,9 +3,10 @@ import Image from './Image';
 import apiKey from "../config";
 import Spinner from '../Spinner';
 import NoMatches from './NoMatches';
-import $ from 'jquery';
 
 let pageNumber = 1;
+let imagesLoaded = 0;
+let x = 0;
 
 class Gallery extends Component {
 
@@ -17,37 +18,19 @@ class Gallery extends Component {
             loading: true,   // used for the loading animation
             loadingMore: false,
         }
-        this.handleStateChange = this.handleStateChange.bind(this)
+        this.loadMore = this.loadMore.bind(this)
     }
 
     componentDidMount() {
         this.count = 0;
         this._isMounted = true;
         this.performQuery(pageNumber);
-
-        $(window).scroll(() => {
-
-            if (Math.ceil($(window).scrollTop() + $(window).height()) === $(document).outerHeight()) {
-                setTimeout(() => {
-                    if (!this.state.loading) {
-                        pageNumber += 1;
-                        console.log('bottom')
-                        this.setState({loadingMore: true})
-                    }
-                }, 500)
-            }
-        })
-    }
-
-    componentDidUpdate() {
-        if (pageNumber > 1 && this.state.loadingMore) {
-            this.performQuery(pageNumber)
-        }
     }
 
     componentWillUnmount() {
         this._isMounted = false;
         pageNumber = 1;
+        imagesLoaded = 0;
     }
 
     generatePhotoLinks(obj) {
@@ -56,7 +39,8 @@ class Gallery extends Component {
     }
 
     performQuery = (page) => {
-        fetch(`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&text=${this.props.tag}&per_page=24&page=${page}&format=json&nojsoncallback=1`)
+        console.log('runs only once')
+        fetch(`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&text=${this.props.tag}&per_page=20&page=${page}&format=json&nojsoncallback=1`)
             .then((response) => response.json())
             .then((data) => data.photos.photo)
             .then((photoInfo) => photoInfo.map(this.generatePhotoLinks))
@@ -66,7 +50,6 @@ class Gallery extends Component {
                     } else {
                         this.setState((prevState) => {
                             return {
-                                loadingMore: false,
                                 images: [
                                     ...prevState.images,
                                     ...photoLinks,
@@ -81,36 +64,38 @@ class Gallery extends Component {
                 "refreshing the page or come back later."));
         };
 
-    imagesLoaded() {
-        let imgElements = document.querySelectorAll("img");
-
-        if (pageNumber > 1) {
-            imgElements = [...imgElements].slice(this.previousImageCount)
+    loadMore() {
+        if (!this.state.loading) {
+            pageNumber += 1;
+            this.setState({loadingMore: true})
+            this.performQuery(pageNumber)
         }
-
-        for (const img of imgElements) {
-            if (!img.complete) {
-            return false;
+    }
+    
+    handleStateChange = () => {
+        imagesLoaded += 1
+        if (this.state.images.length === imagesLoaded) {
+            if (pageNumber === 1) {
+                this.setState({loading: false})
+                x = this.state.images.length
+            } else {
+                if (pageNumber > 1) {
+                    this.setState({loadingMore: false})
+                    x = this.state.images.length
+                }
             }
-        }
-        return true;
-    } 
-
-    handleStateChange() {
-        if (pageNumber === 1) {
-            this.setState({
-                loading: !this.imagesLoaded()
-            })
-        } else {
-            this.previousImageCount = this.state.images.length;
-            this.setState({
-                loadingMore: !this.imagesLoaded()
-            })
         }
     }
 
     render() {
-            const style = this.state.loading ? {'display': 'none'} : {}
+
+            // style must be applied to images
+            let style;
+            if (this.state.loading || this.state.loadingMore) {
+                style = {'display': 'none'}
+            } else {
+                style = {}
+            }
 
             if(this.state.images.length === 0 && !this.state.loading) {
                 return <NoMatches/>
@@ -121,15 +106,19 @@ class Gallery extends Component {
                     {this.state.loading ? <Spinner position="0px" /> : null}
                     <ul>
                         {this.state.images.map((url, i) =>
-                            // {if (this.state.imageWithOverlay === i) {
-                            //     return <Image hovering={true} key={"photo_" + i} label={i} origin={url.origin} photo_url={url.source} />
-                            // } else {
-                                {return <Image loader={this.handleStateChange} styles={style} hovering={false} key={"photo_" + i} label={i} origin={url.origin} photo_url={url.source} />}
-                            // }}
+                            {if (!this.state.loadingMore) {
+                                {return <Image styles={style} onLoader={this.handleStateChange} hovering={false} key={"photo_" + i} label={i} origin={url.origin} photo_url={url.source} />}
+                            } else {
+                                if (i >= x) {
+                                    {return <Image styles={style} onLoader={this.handleStateChange} hovering={false} key={"photo_" + i} label={i} origin={url.origin} photo_url={url.source} />}
+                                } else {
+                                     {return <Image onLoader={this.handleStateChange} hovering={false} key={"photo_" + i} label={i} origin={url.origin} photo_url={url.source} />}
+                                }
+                            }}
                         )}
                     </ul>
                     <div className="loadingMoreContainer">
-                        {this.state.loadingMore ? <Spinner position="130px" /> : null}
+                        {this.state.loadingMore ? <Spinner position="130px" /> : <button onClick={this.loadMore}>Load More</button>}
                     </div>
                 </div>
             )

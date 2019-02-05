@@ -6,6 +6,10 @@ import Spinner from '../../Spinner';
 import NoMatches from '../NoMatches';
 
 
+let pageNumber = 1;
+let imagesLoaded = 0;
+let x = 0;
+
 class SearchResults extends Component {
 
     constructor(props) {
@@ -14,9 +18,9 @@ class SearchResults extends Component {
             imageWithOverlay: null,
             images: [],
             loading: true,
+            loadingMore: false,
             mounted: false // used for determining if componentDidUpdate should run.
         }
-        this.handleStateChange = this.handleStateChange.bind(this)
     }
 
     // runs when user performs second search in a row
@@ -26,8 +30,6 @@ class SearchResults extends Component {
             this.state.mounted = true;
         }
     }
-
-
     // this function runs when a user does a search for the first time, because
     // performQuery() updates the state by setting the images changing loading
     // to false. componentDidUpdate should only run when a user does a second search
@@ -46,25 +48,6 @@ class SearchResults extends Component {
     componentDidMount() {
         this._isMounted = true;
         this.performQuery();
-
-        // function changeState(e) {
-        //     let elm = e.target
-        //     if (elm.dataset.key) {
-        //         this.setState({
-        //             imageWithOverlay: parseInt(e.target.dataset.key)
-        //         })
-        //     } else 
-        //     if (elm.tagName === 'BODY' || elm.className === 'holder' ||
-        //     elm.tagName === 'UL' || elm.tagName === 'LI' 
-        //     || elm.className === "photo-container") {
-        //         this.setState({
-        //             imageWithOverlay: null,
-        //         })
-        //     }
-        // }
-        // changeState = changeState.bind(this)
-        // let body = document.getElementsByTagName("body")[0]
-        // body.addEventListener('mouseover', changeState) 
     }
 
     componentWillUnmount() {
@@ -77,57 +60,33 @@ class SearchResults extends Component {
     }
 
     performQuery = () => {
-
-        fetch(`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&text=${this.props.match.params.term}&per_page=40&format=json&nojsoncallback=1`)
+        fetch(`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&text=${this.props.match.params.term}&per_page=20&format=json&nojsoncallback=1`)
             .then((response) => response.json())
             .then((data) => data.photos.photo)
             .then((photoInfo) => photoInfo.map(this.generatePhotoLinks))
-            .then((photoLinks) => { if(this._isMounted) {this.setState({images: photoLinks})}})
+            .then((photoLinks) => { if(this._isMounted) {this.setState({images: photoLinks, loading: false})}})
             .catch(() => alert("Something has gone wrong and there's an error. Try " +
                 "refreshing the page or come back later."));
-
     };
 
-    imagesLoaded() {
-        const imgElements = document.querySelectorAll("img");
-        for (const img of imgElements) {
-            if (!img.complete) {
-            return false;
-            }
-        }
-        return true;
-    }    
-
-    handleStateChange() {
-        this.setState({
-            loading: !this.imagesLoaded()
-        })
-    }
 
     render() {
-
-        const style = this.state.loading ? {'display': 'none'} : {}
 
         if(this.state.images.length === 0 && !this.state.loading) {
             return <NoMatches/>
         }
 
-            return (
-                <div className="photo-container">
-                    <h2>{this.props.match.params.term}</h2>
-                    {this.state.loading ? <Spinner /> : null}
-                    <ul>
-                        {this.state.images.map((url, i) =>
-                            // {if (this.state.imageWithOverlay === i) {
-                            //     return <Image hovering={true} key={"photo_" + i} label={i} origin={url.origin} photo_url={url.source} />
-                            // } else {
-                                {return <Image loader={this.handleStateChange} styles={style} hovering={false} key={"photo_" + i} label={i} origin={url.origin} photo_url={url.source} />}
-                            // }}
-                        )}
-                    </ul>
-                </div>
-            )
-      
+        return (
+            <div className="photo-container">
+                <h2>{this.props.match.params.term}</h2>
+                {this.state.loading ? <Spinner /> : null}
+                <ul>
+                    {this.state.images.map((url, i) =>
+                        {return <Image key={"photo_" + i} label={i} origin={url.origin} photo_url={url.source} />}
+                    )}
+                </ul>
+            </div>
+        )
     }
 }
 
