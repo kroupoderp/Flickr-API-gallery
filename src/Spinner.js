@@ -5,7 +5,7 @@ import React from 'react';
 const Spinner = (props) => {
 
     return (
-        <div style={{bottom: props.position}} className="ispinner ispinner--animating ispinner--gray">
+        <div className="ispinner ispinner--animating ispinner--gray">
             <div className="ispinner__blade"></div>
             <div className="ispinner__blade"></div>
             <div className="ispinner__blade"></div>

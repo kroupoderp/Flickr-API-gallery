@@ -6,7 +6,7 @@ import NoMatches from './NoMatches';
 
 let pageNumber = 1;
 let imagesLoaded = 0;
-let x = 0;
+let newImagesStartIndex = 0;
 
 class Gallery extends Component {
 
@@ -18,7 +18,6 @@ class Gallery extends Component {
             loading: true,   // used for the loading animation
             loadingMore: false,
         }
-        this.loadMore = this.loadMore.bind(this)
     }
 
     componentDidMount() {
@@ -39,14 +38,14 @@ class Gallery extends Component {
     }
 
     performQuery = (page) => {
-        console.log('runs only once')
-        fetch(`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&text=${this.props.tag}&per_page=20&page=${page}&format=json&nojsoncallback=1`)
+        fetch(`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&text=${this.props.tag}&per_page=36&page=${page}&format=json&nojsoncallback=1`)
             .then((response) => response.json())
             .then((data) => data.photos.photo)
             .then((photoInfo) => photoInfo.map(this.generatePhotoLinks))
             .then((photoLinks) => { if(this._isMounted) {
                     if (pageNumber === 1) {
                         this.setState({images: photoLinks})
+
                     } else {
                         this.setState((prevState) => {
                             return {
@@ -64,7 +63,7 @@ class Gallery extends Component {
                 "refreshing the page or come back later."));
         };
 
-    loadMore() {
+    loadMore = () => {
         if (!this.state.loading) {
             pageNumber += 1;
             this.setState({loadingMore: true})
@@ -77,11 +76,11 @@ class Gallery extends Component {
         if (this.state.images.length === imagesLoaded) {
             if (pageNumber === 1) {
                 this.setState({loading: false})
-                x = this.state.images.length
+                newImagesStartIndex = this.state.images.length
             } else {
                 if (pageNumber > 1) {
                     this.setState({loadingMore: false})
-                    x = this.state.images.length
+                    newImagesStartIndex = this.state.images.length
                 }
             }
         }
@@ -89,39 +88,40 @@ class Gallery extends Component {
 
     render() {
 
-            // style must be applied to images
-            let style;
-            if (this.state.loading || this.state.loadingMore) {
-                style = {'display': 'none'}
-            } else {
-                style = {}
-            }
+        // style must be applied to images
+        let style;
+        if (this.state.loading || this.state.loadingMore) {
+            style = {'display': 'none'}
+        } else {
+            style = {}
+        }
 
-            if(this.state.images.length === 0 && !this.state.loading) {
-                return <NoMatches/>
-            }
-            return (
-                <div className="photo-container">
-                    <h2>{this.props.title}</h2>
-                    {this.state.loading ? <Spinner position="0px" /> : null}
-                    <ul>
-                        {this.state.images.map((url, i) =>
-                            {if (!this.state.loadingMore) {
+        if(this.state.images.length === 0 && !this.state.loading) {
+            return <NoMatches/>
+        }
+
+        return (
+            <div className="photo-container">
+                <h2>{this.props.title}</h2>
+                {this.state.loading ? <Spinner position="0px" /> : null}
+                <ul>
+                    {this.state.images.map((url, i) =>
+                        {if (!this.state.loadingMore) {
+                            {return <Image styles={style} onLoader={this.handleStateChange} hovering={false} key={"photo_" + i} label={i} origin={url.origin} photo_url={url.source} />}
+                        } else {
+                            if (i >= newImagesStartIndex) {
                                 {return <Image styles={style} onLoader={this.handleStateChange} hovering={false} key={"photo_" + i} label={i} origin={url.origin} photo_url={url.source} />}
                             } else {
-                                if (i >= x) {
-                                    {return <Image styles={style} onLoader={this.handleStateChange} hovering={false} key={"photo_" + i} label={i} origin={url.origin} photo_url={url.source} />}
-                                } else {
-                                     {return <Image onLoader={this.handleStateChange} hovering={false} key={"photo_" + i} label={i} origin={url.origin} photo_url={url.source} />}
-                                }
-                            }}
-                        )}
-                    </ul>
-                    <div className="loadingMoreContainer">
-                        {this.state.loadingMore ? <Spinner position="130px" /> : <button onClick={this.loadMore}>Load More</button>}
-                    </div>
+                                    {return <Image onLoader={this.handleStateChange} hovering={false} key={"photo_" + i} label={i} origin={url.origin} photo_url={url.source} />}
+                            }
+                        }}
+                    )}
+                </ul>
+                <div className="loadingMoreContainer">
+                    {this.state.loadingMore ? <Spinner /> : <button className="loadMore" style={style} onClick={this.loadMore}>Load More</button>}
                 </div>
-            )
+            </div>
+        )
     }
 }
 

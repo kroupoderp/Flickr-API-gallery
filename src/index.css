@@ -15,6 +15,10 @@ ul {
     padding-left: 0;
 }
 
+/* ul:nth-child(2) {
+    margin-bottom: 120px;
+} */
+
 a {
     text-decoration: none
 }
@@ -106,7 +110,22 @@ input {
 /* End of image gallery styles */
 
 
+.loadMore {
+    margin-top: 94px;
+    background: #DE1993;
+    height: 40px;
+    width: 70%;
+    border-radius: 3px;
+    color: white;
+    max-width: 642px;
+    font-size: 22px;
+    outline: none;
+    border: none;
+}
 
+.loadMore:hover {
+    cursor: pointer;
+}
 
 
 
@@ -167,9 +186,7 @@ svg {
     margin-top: 4em
 }
 
-.loadingMoreContainer {
-    height: 20px;
-}
+
 
 /* Spinner configuration */
 
@@ -355,7 +372,7 @@ svg {
     /* container contains all HTML elements*/
     .container {
         max-width: 960px;
-        margin: 0 auto 4em
+        margin: 0 auto 9em
     }
     
     .main-nav ul {

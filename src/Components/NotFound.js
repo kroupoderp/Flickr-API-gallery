@@ -8,7 +8,7 @@ const NotFound = () => (
         <h2>Ooops!!! The page you requested cannot be found.</h2>
         <p className="banner">The link may be broken or the page may have been removed</p>
         {/*the below link is for navigating back to /, which will redirect to /cars*/}
-        <Link to="/cars">Back to main page</Link>
+        <Link to="/trains">Back to main page</Link>
     </div>
 );
 
