@@ -13,13 +13,12 @@ class Gallery extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            imageWithOverlay: null,
             images: [],
             loading: true,   // used for the loading animation
             loadingMore: false,
         }
     }
-
+    
     componentDidMount() {
         this.count = 0;
         this._isMounted = true;
@@ -88,7 +87,6 @@ class Gallery extends Component {
 
     render() {
 
-        // style must be applied to images
         let style;
         if (this.state.loading || this.state.loadingMore) {
             style = {'display': 'none'}
@@ -104,7 +102,7 @@ class Gallery extends Component {
             <div className="photo-container">
                 <h2>{this.props.title}</h2>
                 {this.state.loading ? <Spinner position="0px" /> : null}
-                <ul>
+                <div className="photosHolder">
                     {this.state.images.map((url, i) =>
                         {if (!this.state.loadingMore) {
                             {return <Image styles={style} onLoader={this.handleStateChange} hovering={false} key={"photo_" + i} label={i} origin={url.origin} photo_url={url.source} />}
@@ -116,7 +114,7 @@ class Gallery extends Component {
                             }
                         }}
                     )}
-                </ul>
+                </div>
                 <div className="loadingMoreContainer">
                     {this.state.loadingMore ? <Spinner /> : <button className="loadMore" style={style} onClick={this.loadMore}>Load More</button>}
                 </div>

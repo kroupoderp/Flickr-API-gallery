@@ -15,7 +15,6 @@ class SearchResults extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            imageWithOverlay: null,
             images: [],
             loading: true,
             loadingMore: false,
@@ -137,7 +136,7 @@ class SearchResults extends Component {
                 <h2>{this.props.match.params.term}</h2>
                 {this.state.loading ? <Spinner /> : null}
                 
-                <ul>
+                <div className="photosHolder">
                     {this.state.images.map((url, i) =>
                         {if (!this.state.loadingMore) {
                             {return <Image styles={style} onLoader={this.handleStateChange} hovering={false} key={"photo_" + i} label={i} origin={url.origin} photo_url={url.source} />}
@@ -149,7 +148,7 @@ class SearchResults extends Component {
                             }
                         }}
                     )}
-                </ul>
+                </div>
                 <div className="loadingMoreContainer">
                         {this.state.loadingMore ? <Spinner /> : <button className='loadMore' style={style} onClick={this.loadMore}>Load More</button>}
                 </div>

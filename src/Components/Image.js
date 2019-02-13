@@ -6,9 +6,9 @@ class Image extends React.Component {
 
   render() {
     return (
-      <li style={this.props.styles}>
+      <div style={this.props.styles}>
         <img onLoad={this.props.onLoader} data-key={this.props.label} src={this.props.photo_url} alt=""/>
-      </li>
+      </div>
     )
   }
 }
