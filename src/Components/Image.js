@@ -3,7 +3,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 class Image extends React.Component {
-
   constructor(props) {
     super(props)
     this.state = {
@@ -11,25 +10,27 @@ class Image extends React.Component {
     }
   }
 
-  componentDidMount() {
-    let body = document.getElementsByTagName('body')[0]
-
-    let hoverHandler = (e) => {
-      if (parseInt(e.target.dataset.key) === this.props.label) {
-        console.log(e.target.dataset.key)
-      }
-    }
-
-    body.addEventListener('mouseover', hoverHandler)
+  hoverHandler = (e) => {
+    this.setState({hovering: true})
   }
 
-
+  handleLeave = (e) => {
+    this.setState({hovering: false})
+  }
 
   render() {
     if (!this.state.hovering) {
       return (
-        <div style={this.props.styles} className="image">
-          <img onLoad={this.props.onLoader} data-key={this.props.label} src={this.props.photo_url} alt=""/>
+        <div onMouseOver={this.hoverHandler} style={this.props.styles} className="image">
+          <img onLoad={this.props.onLoader} src={this.props.photo_url} alt=""/>
+        </div>
+      )
+    } else {
+      // return the overlay div
+      // the filter style is here temporarily
+      return (
+        <div onMouseOver={this.hoverHandler} onMouseLeave={this.handleLeave} className="image">
+          <img style={{filter: 'opacity(20%)'}} onLoad={this.props.onLoader} data-key={this.props.label} src={this.props.photo_url} alt=""/>
         </div>
       )
     }
@@ -39,7 +40,6 @@ class Image extends React.Component {
 Image.propTypes = {
   photo_url: PropTypes.string.isRequired,
   // origin: PropTypes.string.isRequired,
-  // hovering: PropTypes.bool.isRequired,
 };
 
 export default Image;

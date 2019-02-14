@@ -139,12 +139,12 @@ class SearchResults extends Component {
                 <div className="photosHolder">
                     {this.state.images.map((url, i) =>
                         {if (!this.state.loadingMore) {
-                            {return <Image styles={style} onLoader={this.handleStateChange} hovering={false} key={"photo_" + i} label={i} origin={url.origin} photo_url={url.source} />}
+                            {return <Image styles={style} onLoader={this.handleStateChange} hovering={false} key={"photo_" + i} origin={url.origin} photo_url={url.source} />}
                         } else {
                             if (i >= newImagesStartIndex) {
-                                {return <Image styles={style} onLoader={this.handleStateChange} hovering={false} key={"photo_" + i} label={i} origin={url.origin} photo_url={url.source} />}
+                                {return <Image styles={style} onLoader={this.handleStateChange} hovering={false} key={"photo_" + i} origin={url.origin} photo_url={url.source} />}
                             } else {
-                                    {return <Image onLoader={this.handleStateChange} hovering={false} key={"photo_" + i} label={i} origin={url.origin} photo_url={url.source} />}
+                                    {return <Image onLoader={this.handleStateChange} hovering={false} key={"photo_" + i} origin={url.origin} photo_url={url.source} />}
                             }
                         }}
                     )}
