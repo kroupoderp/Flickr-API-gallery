@@ -66,47 +66,29 @@ input {
     margin-bottom: 1em
 }
 
-
-
-
-
 /* Start of image gallery styles */
-
-.photo-container .photosHolder {
-    display: -ms-grid;
-    display: grid;
-    -ms-grid-columns: 25% 4px 25% 4px 25% 4px 25%;
-    grid-template-columns: 25% 25% 25% 25%;
-    grid-column-gap: 4px;
-    grid-row-gap: 4px;
-}
-
-
-/* Need to be changed */
-.photo-container .photosHolder div {
-    width: 100% !important;
-    height: auto !important;
-    position: relative;
-    max-height: 220px;
-    overflow: hidden;
-}
-
 .photo-container .photosHolder img {
     width: 100%;
     height: 100%;
-    -o-object-fit: cover;
-       object-fit: cover;
+    object-fit: cover;
 }
 
-@media (max-width: 768px) {
+.photo-container .photosHolder {
+    max-width: 1000px;
+    min-width: 320px;
+    margin: 0 auto;
+    display: grid;
+    grid-gap: 2px;
+    grid-template-columns: repeat(2, minmax(100px, 1fr));
+    grid-auto-rows: 250px 150px;
+}
+
+@media (min-width: 576px) {
     .photo-container .photosHolder {
-        -ms-grid-columns: 33.33% 33.33% 33.33%;
-        grid-template-columns: 33.33% 33.33% 33.33%;
+         grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     }
 }
-
 /* End of image gallery styles */
-
 
 .loadMore {
     margin-top: 94px;
@@ -124,7 +106,6 @@ input {
 .loadMore:hover {
     cursor: pointer;
 }
-
 
 
 /* Overlay configuration */
@@ -172,8 +153,6 @@ svg {
     padding-right: 3px;
 }
 
-
-
 .photo-container .not-found {
     width: 100%
 }
@@ -184,11 +163,7 @@ svg {
     margin-top: 4em
 }
 
-
-
 /* Spinner configuration */
-
-
 .ispinner {
     margin: 130px auto;
     position: relative;
@@ -359,9 +334,9 @@ svg {
         padding-top: 2em
     }
     /* Need to be changed */
-    .photo-container div {
+    /* .photo-container div {
         margin: auto
-    }
+    } */
 }
 
 @media only screen and (min-width:768px) {
