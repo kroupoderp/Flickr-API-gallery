@@ -137,12 +137,7 @@ input {
     background-color: rgba(0,0,0, .5);
     height: 120px;
 }
-.overlayText {
-    color: white;
-    font-weight: bolder;
-    padding: 0;
-    margin: 0;
-}
+
 .text {
     display: block;
     color: white;
@@ -151,10 +146,6 @@ input {
     margin: 0;
 }
 /* End of overlay configuration */
-
-
-
-
 
 svg {
     padding-right: 3px;
