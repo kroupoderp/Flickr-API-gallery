@@ -47,6 +47,9 @@ class Gallery extends Component {
 
                     } else {
                         this.setState((prevState) => {
+                            if (photoLinks.length === 0) {
+                                this.setState({loadingMore: false})
+                            }
                             return {
                                 images: [
                                     ...prevState.images,

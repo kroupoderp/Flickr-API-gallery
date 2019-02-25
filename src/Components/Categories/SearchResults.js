@@ -76,6 +76,9 @@ class SearchResults extends Component {
                 if (pageNumber === 1) {
                         this.setState({images: photoLinks})
                     } else {
+                        if (photoLinks.length === 0) {
+                            this.setState({loadingMore: false})
+                        }
                         this.setState((prevState) => {
                             return {
                                 images: [
