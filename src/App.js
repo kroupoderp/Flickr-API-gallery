@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './index.css';
 import Search from './Components/Search';
 import NavBar from './Components/NavBar';
 import {BrowserRouter, Route, Redirect, Switch} from 'react-router-dom';
@@ -47,7 +46,6 @@ class App extends Component {
 
                         <Route component={NotFound}/>
                     </Switch>
-
                 </React.Fragment>
             </BrowserRouter>
         );
